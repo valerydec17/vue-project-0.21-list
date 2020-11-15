@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    Input a name !
+    <div>
+      <input v-model="name" />
+      <button v-on:click="addName(name)">add</button>
+    </div>
+    <div>
+      <h5 v-for="item in getNames" :key="item">
+        <ShowRow v-bind:name="item" />
+      </h5>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapGetters, mapActions } from "vuex";
+import ShowRow from "./components/ShowRow.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    ShowRow,
+  },
+  data: function () {
+    return {
+      name: "",
+    };
+  },
+  computed: {
+    ...mapGetters(["getNames"]),
+  },
+  methods: {
+    ...mapActions(["addName", 'removeName']),
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
